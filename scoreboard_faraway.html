@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compteur de scores – Faraway</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="home-link">Accueil</a>
+        <h1>Compteur de scores – Faraway</h1>
+    </header>
+    <main>
+        <section id="setup-section">
+            <h2>Préparer la partie</h2>
+            <form id="setup-form">
+                <label for="player-count">Nombre de joueurs :</label>
+                <input type="number" id="player-count" name="player-count" min="1" max="6" value="4" required>
+                <div id="player-names-container">
+                    <!-- Les champs de nom de joueur seront générés ici -->
+                </div>
+                <button type="submit">Commencer la partie</button>
+            </form>
+        </section>
+        <section id="score-section" class="hidden">
+            <h2>Feuille de score Faraway</h2>
+            <div id="scoreboard-container">
+                <!-- Le tableau des scores sera généré ici -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>Bon voyage de retour !</p>
+    </footer>
+    <script src="scoreboard_faraway.js"></script>
+</body>
+</html>

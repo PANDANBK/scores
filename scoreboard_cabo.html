@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compteur de scores – CABO</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <!-- Lien pour revenir à l'accueil -->
+        <a href="index.html" class="home-link">Accueil</a>
+        <h1>Compteur de scores – CABO</h1>
+    </header>
+    <main>
+        <section id="setup-section">
+            <h2>Préparer la partie</h2>
+            <form id="setup-form">
+                <label for="player-count">Nombre de joueurs&nbsp;:</label>
+                <!-- CABO se joue de 2 à 5 joueurs (jusqu'à 6 avec deux jeux). On permet jusqu'à 6 joueurs. -->
+                <input type="number" id="player-count" name="player-count" min="2" max="6" value="2" required>
+                <div id="player-names-container">
+                    <!-- Les champs de nom de joueur seront générés ici -->
+                </div>
+                <button type="submit">Commencer la partie</button>
+            </form>
+        </section>
+        <section id="score-section" class="hidden">
+            <h2>Feuille de score CABO</h2>
+            <div id="scoreboard-container">
+                <!-- Le tableau des scores sera généré ici -->
+            </div>
+            <!-- Bouton pour ajouter une nouvelle manche -->
+            <button id="add-round-btn">Ajouter une manche</button>
+        </section>
+    </main>
+    <footer>
+        <p>Amusez‑vous bien&nbsp;!</p>
+    </footer>
+    <!-- Script spécifique pour CABO -->
+    <script src="scoreboard_cabo.js"></script>
+</body>
+</html>

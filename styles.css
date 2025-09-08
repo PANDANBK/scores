@@ -1,0 +1,225 @@
+/* Styles généraux pour l'application de compteur de scores */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7;
+    color: #333;
+}
+
+header {
+    background-color: #4a90e2;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    margin: 0.5rem 0;
+    font-size: 2rem;
+}
+
+header p {
+    margin: 0;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+main {
+    padding: 1rem;
+}
+
+.game-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.game-link {
+    display: block;
+    padding: 1rem 1.5rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+    color: #4a90e2;
+    font-weight: bold;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.game-link:hover {
+    background-color: #e6f1fb;
+    transform: translateY(-2px);
+}
+
+form {
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+form input[type="number"],
+form input[type="text"] {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background-color: #4a90e2;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+form button:hover {
+    background-color: #357ab7;
+}
+
+
+/* Masquer les éléments marqués hidden */
+.hidden {
+    display: none !important;
+}
+
+.scoreboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+}
+
+.scoreboard-table th, .scoreboard-table td {
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.scoreboard-table th {
+    background-color: #f0f6fb;
+    font-weight: bold;
+}
+
+.scoreboard-table input[type="number"] {
+    width: 60px;
+    padding: 0.25rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: right;
+}
+
+#add-round-btn {
+    display: block;
+    margin: 1rem auto;
+    padding: 0.5rem 1rem;
+    background-color: #f5a623;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+#add-round-btn:hover {
+    background-color: #d4881d;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Permettre le défilement horizontal sur les feuilles de score */
+#scoreboard-container {
+    overflow-x: auto;
+}
+
+/* Petites améliorations pour les champs de noms de joueurs */
+.player-name-field {
+    margin-bottom: 0.5rem;
+}
+
+/* Lien de retour à l'accueil dans l'en-tête */
+.home-link {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Classe pour signaler qu'un joueur a dépassé 100 points dans CABO */
+.exceeded {
+    background-color: #ffe6e6;
+    color: #c00;
+    font-weight: bold;
+}
+/* Ajuster l'alignement du titre lorsqu'un lien d'accueil est présent */
+header h1 {
+    margin-left: 2rem;
+}
+
+/* Responsive design pour mobile */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    header p {
+        font-size: 0.9rem;
+    }
+    .game-list {
+        flex-direction: column;
+        align-items: center;
+    }
+    .game-link {
+        width: 80%;
+        text-align: center;
+    }
+    form {
+        width: 100%;
+        padding: 0.75rem;
+    }
+    form input[type="number"],
+    form input[type="text"] {
+        font-size: 1rem;
+    }
+    #scoreboard-container {
+        overflow-x: auto;
+    }
+    .scoreboard-table {
+        min-width: 500px;
+        font-size: 0.8rem;
+    }
+    .scoreboard-table input[type="number"] {
+        width: 50px;
+        font-size: 0.8rem;
+    }
+    #add-round-btn {
+        width: 80%;
+    }
+}
