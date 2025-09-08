@@ -64,6 +64,17 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'Total général', type: 'computed' }
     ];
 
+    // Définition des valeurs possibles pour les catégories de la section supérieure (1 à 6)
+    // Chaque sous-tableau représente les points possibles pour la catégorie correspondante (As -> Six).
+    const upperSelectOptions = [
+        [0, 1, 2, 3, 4, 5],       // As (1)
+        [0, 2, 4, 6, 8, 10],      // Deux (2)
+        [0, 3, 6, 9, 12, 15],     // Trois (3)
+        [0, 4, 8, 12, 16, 20],    // Quatre (4)
+        [0, 5, 10, 15, 20, 25],   // Cinq (5)
+        [0, 6, 12, 18, 24, 30]    // Six (6)
+    ];
+
     function generateScoreboard(players) {
         const table = document.createElement('table');
         table.classList.add('scoreboard-table');
@@ -97,11 +108,32 @@ document.addEventListener('DOMContentLoaded', () => {
                     span.dataset.rowIndex = rowIndex;
                     span.textContent = '0';
                     td.appendChild(span);
+                } else if (cat.type === 'upper') {
+                    // pour les catégories de la section supérieure, utiliser un menu déroulant avec des valeurs prédéfinies
+                    const select = document.createElement('select');
+                    select.dataset.playerIndex = pIndex;
+                    select.dataset.rowIndex = rowIndex;
+                    // options issues de upperSelectOptions selon l'index de catégorie
+                    // On insère d'abord une option vide pour que la valeur initiale soit vide (pas de 0 affiché)
+                    const emptyOption = document.createElement('option');
+                    emptyOption.value = '';
+                    emptyOption.textContent = '';
+                    select.appendChild(emptyOption);
+                    const values = upperSelectOptions[rowIndex];
+                    values.forEach((val) => {
+                        const option = document.createElement('option');
+                        option.value = val.toString();
+                        option.textContent = val.toString();
+                        select.appendChild(option);
+                    });
+                    // Pas de valeur sélectionnée par défaut ; la cellule reste vide
+                    select.addEventListener('change', calculateTotals);
+                    td.appendChild(select);
                 } else {
+                    // catégories de la section inférieure : champ numérique libre
                     const input = document.createElement('input');
                     input.type = 'number';
                     input.min = '0';
-                    // Laisser les cellules de score vides par défaut
                     input.value = '';
                     input.dataset.playerIndex = pIndex;
                     input.dataset.rowIndex = rowIndex;
@@ -128,7 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const lowerSum = new Array(playerCount).fill(0);
         const fullData = new Array(playerCount).fill(0);
         // Parcourir chaque cellule d'entrée
-        const inputs = table.querySelectorAll('input');
+        // Récupérer toutes les entrées numériques et menus déroulants
+        const inputs = table.querySelectorAll('input, select');
         inputs.forEach((input) => {
             const playerIndex = parseInt(input.dataset.playerIndex, 10);
             const rowIndex = parseInt(input.dataset.rowIndex, 10);

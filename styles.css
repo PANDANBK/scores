@@ -1,99 +1,167 @@
-/* Styles généraux pour l'application de compteur de scores */
+/* ------------------------------------------------------------------
+   Styles généraux pour l'application de compteur de scores
+
+   Cette section définit une palette de couleurs moderne et un design
+   épuré inspiré des interfaces actuelles. Les variables CSS sont
+   utilisées pour centraliser les couleurs et faciliter leur
+   personnalisation. Les composants (boutons, cartes, tableaux) ont
+   été retravaillés afin d'offrir une expérience plus agréable et
+   cohérente sur tous les jeux.
+------------------------------------------------------------------ */
+
+/* Palette de couleurs et variables globales */
+:root {
+    /* Couleurs principales */
+    --primary-color: #5468ff;       /* Bleu lavande moderne */
+    --primary-color-dark: #3c4fcb; /* Variante plus sombre pour hover */
+    --secondary-color: #ff757f;     /* Rose corail pour accents */
+    --background-color: #f5f7fa;    /* Fond général clair */
+    --card-background: #ffffff;      /* Fond des cartes/formulaires */
+    --text-color: #2b2b2b;          /* Couleur de texte par défaut */
+    --muted-text-color: #555;       /* Texte secondaire */
+    --border-color: #e0e6ed;        /* Couleur des bordures discrètes */
+    --header-bg-start: #5468ff;     /* Dégradé de l'en‑tête (début) */
+    --header-bg-end:   #7c3aed;     /* Dégradé de l'en‑tête (fin) */
+    --table-row-alt: #fafbfc;        /* Couleur alternée pour les tableaux */
+}
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f7f7f7;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
 }
 
 header {
-    background-color: #4a90e2;
+    background-image: linear-gradient(135deg, var(--header-bg-start), var(--header-bg-end));
     color: #fff;
-    padding: 1rem;
+    padding: 1.25rem 1rem;
     text-align: center;
     position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    margin: 0.5rem 0;
-    font-size: 2rem;
+    margin: 0.25rem 0;
+    font-size: 2.2rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 header p {
     margin: 0;
     font-size: 1rem;
-    opacity: 0.8;
+    opacity: 0.9;
+    font-weight: 300;
 }
 
 main {
-    padding: 1rem;
+    padding: 1.5rem;
 }
+
+/* Cartes de contenu pour toutes les sections principales. Elles
+   permettent de mieux distinguer les zones interactives du fond et
+   améliorent la lisibilité, notamment sur les pages avec une image
+   d'arrière-plan (Yams, Faraway, Cabo). */
+main section {
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem auto;
+    max-width: 900px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* Pour les pages qui utilisent la classe .cabo-page, on conserve
+   l'assombrissement précédent pour une meilleure lisibilité, mais
+   l'effet ci‑dessus reste applicable. */
 
 .game-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+    margin-top: 1rem;
 }
 
+/* Liens vers les jeux sur la page d'accueil */
 .game-link {
     display: block;
-    padding: 1rem 1.5rem;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem 1.75rem;
+    background-color: var(--card-background);
+    border-radius: 10px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
     text-decoration: none;
-    color: #4a90e2;
-    font-weight: bold;
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.game-link:hover {
-    background-color: #e6f1fb;
-    transform: translateY(-2px);
+.game-link:hover,
+.game-link:focus {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 form {
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
+    background-color: var(--card-background);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.08);
+    max-width: 640px;
+    margin: 1rem auto;
 }
 
 form label {
     display: block;
-    margin-bottom: 0.5rem;
-    font-weight: bold;
+    margin-bottom: 0.4rem;
+    font-weight: 600;
+    color: var(--muted-text-color);
 }
 
 form input[type="number"],
-form input[type="text"] {
+form input[type="text"],
+form select {
     width: 100%;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 0.6rem 0.8rem;
+    margin-bottom: 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: #fff;
     box-sizing: border-box;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+form input[type="number"]:focus,
+form input[type="text"]:focus,
+form select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(84, 104, 255, 0.2);
 }
 
 form button {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    background-color: #4a90e2;
+    padding: 0.6rem 1.4rem;
+    background-color: var(--primary-color);
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.2s ease;
+    font-weight: 600;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-form button:hover {
-    background-color: #357ab7;
+form button:hover,
+form button:focus {
+    background-color: var(--primary-color-dark);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -102,53 +170,81 @@ form button:hover {
     display: none !important;
 }
 
+/* Tableau des scores modernisé */
 .scoreboard-table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    background-color: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.95rem;
 }
 
-.scoreboard-table th, .scoreboard-table td {
-    border: 1px solid #ddd;
-    padding: 0.5rem;
+.scoreboard-table th,
+.scoreboard-table td {
+    padding: 0.6rem;
     text-align: center;
 }
 
 .scoreboard-table th {
-    background-color: #f0f6fb;
-    font-weight: bold;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.scoreboard-table input[type="number"] {
+.scoreboard-table tbody tr:nth-child(even) {
+    background-color: var(--table-row-alt);
+}
+
+.scoreboard-table input[type="number"],
+.scoreboard-table select {
     width: 60px;
-    padding: 0.25rem;
-    border: 1px solid #ccc;
+    padding: 0.3rem;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
     text-align: right;
+    font-size: 0.9rem;
+    background-color: #fff;
+    color: var(--text-color);
 }
 
+.scoreboard-table input[type="number"]:focus,
+.scoreboard-table select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(84, 104, 255, 0.2);
+}
+
+/* Bouton d'ajout de manche stylisé */
 #add-round-btn {
     display: block;
-    margin: 1rem auto;
-    padding: 0.5rem 1rem;
-    background-color: #f5a623;
+    margin: 1.5rem auto;
+    padding: 0.6rem 1.5rem;
+    background-color: var(--secondary-color);
     color: #fff;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 1rem;
-    transition: background-color 0.2s ease;
+    font-weight: 600;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-#add-round-btn:hover {
-    background-color: #d4881d;
+#add-round-btn:hover,
+#add-round-btn:focus {
+    background-color: #e05b66;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 footer {
     text-align: center;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     font-size: 0.9rem;
-    color: #777;
+    color: var(--muted-text-color);
 }
 
 /* Permettre le défilement horizontal sur les feuilles de score */
