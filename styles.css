@@ -179,6 +179,16 @@ footer {
     color: #c00;
     font-weight: bold;
 }
+
+/* Mise en forme de l'illustration d'inspiration pour le jeu Cabo */
+.cabo-inspiration img {
+    width: 100%;
+    max-width: 800px;
+    display: block;
+    margin: 0 auto 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
 /* Ajuster l'alignement du titre lorsqu'un lien d'accueil est présent */
 header h1 {
     margin-left: 2rem;

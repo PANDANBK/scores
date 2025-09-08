@@ -80,9 +80,6 @@ document.addEventListener('DOMContentLoaded', () => {
             th.textContent = player;
             headerRow.appendChild(th);
         });
-        const roundTotalHeader = document.createElement('th');
-        roundTotalHeader.textContent = 'Total manche';
-        headerRow.appendChild(roundTotalHeader);
         thead.appendChild(headerRow);
         table.appendChild(thead);
         // Corps : les manches seront ajoutées dynamiquement
@@ -101,9 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
             td.textContent = '0';
             totalRow.appendChild(td);
         });
-        // La dernière cellule du pied de tableau reste vide (pas de total de manche)
-        const emptyCell = document.createElement('td');
-        totalRow.appendChild(emptyCell);
         tfoot.appendChild(totalRow);
         table.appendChild(tfoot);
         scoreboardContainer.innerHTML = '';
@@ -117,7 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const table = scoreboardContainer.querySelector('table');
         const tbody = table.querySelector('tbody');
         // Nombre de joueurs = nombre d'en‑têtes dans le thead moins la colonne de manche et total manche
-        const playersCount = table.querySelectorAll('thead th').length - 2;
+        // Le nombre de joueurs est égal au nombre de cellules d'en‑tête moins une (la colonne "Manche")
+        const playersCount = table.querySelectorAll('thead th').length - 1;
         const rowIndex = tbody.querySelectorAll('tr').length + 1;
         const tr = document.createElement('tr');
         const roundLabel = document.createElement('th');
@@ -129,19 +124,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const input = document.createElement('input');
             input.type = 'number';
             input.min = '0';
-            input.value = '0';
+            // Laisser les cellules de score vides par défaut pour CABO
+            input.value = '';
             input.dataset.playerIndex = i;
             input.addEventListener('input', calculateTotals);
             td.appendChild(input);
             tr.appendChild(td);
         }
-        // Cellule pour total de la manche
-        const roundTotalCell = document.createElement('td');
-        roundTotalCell.classList.add('round-total-cell');
-        roundTotalCell.textContent = '0';
-        tr.appendChild(roundTotalCell);
+        // Pas de colonne "Total de la manche" pour CABO
         tbody.appendChild(tr);
-        // Recalculer les totaux
+        // Recalculer les totaux après avoir ajouté la manche
         calculateTotals();
     }
 
@@ -150,7 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const table = scoreboardContainer.querySelector('table');
         if (!table) return;
         const tbodyRows = table.querySelectorAll('tbody tr');
-        const playersCount = table.querySelectorAll('thead th').length - 2;
+        // Le nombre de joueurs est égal au nombre de cellules d'en‑tête moins une (colonne "Manche")
+        const playersCount = table.querySelectorAll('thead th').length - 1;
         const playerTotals = new Array(playersCount).fill(0);
         // Parcourir chaque manche
         tbodyRows.forEach((row) => {

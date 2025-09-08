@@ -87,7 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const input = document.createElement('input');
                 input.type = 'number';
                 input.min = '0';
-                input.value = '0';
+                // Laisser les cellules de score vides par défaut pour Faraway
+                input.value = '';
                 input.dataset.playerIndex = i;
                 input.dataset.rowIndex = rowIndex;
                 input.addEventListener('input', calculateTotals);
