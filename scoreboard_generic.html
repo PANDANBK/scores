@@ -3,38 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compteur de scores – Yams (Yahtzee)</title>
+    <title>Compteur de scores – Jeu générique</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
         <a href="index.html" class="home-link">Accueil</a>
-        <h1>Compteur de scores – Yams (Yahtzee)</h1>
+        <h1>Compteur de scores – Jeu générique</h1>
     </header>
     <main>
         <section id="setup-section">
             <h2>Préparer la partie</h2>
             <form id="setup-form">
-                <label for="player-count">Nombre de joueurs :</label>
-                <input type="number" id="player-count" name="player-count" min="1" max="6" value="2" required>
+                <label for="player-count">Nombre de joueurs&nbsp;:</label>
+                <input type="number" id="player-count" name="player-count" min="1" max="10" value="4" required>
                 <div id="player-names-container">
-                    <!-- Les champs de nom de joueur seront générés ici -->
+                    <!-- Les champs des noms des joueurs seront générés ici -->
                 </div>
                 <button type="submit">Commencer la partie</button>
             </form>
         </section>
         <section id="score-section" class="hidden">
-            <h2>Feuille de score Yams</h2>
+            <h2>Feuille de score – Jeu générique</h2>
             <div id="scoreboard-container">
                 <!-- Le tableau des scores sera généré ici -->
             </div>
-            <!-- Bouton pour rejouer la même partie avec les mêmes joueurs -->
+            <!-- Boutons pour ajouter une manche ou rejouer -->
+            <button id="add-round-btn">Ajouter une manche</button>
             <button id="replay-btn" class="hidden">Rejouer</button>
         </section>
     </main>
     <footer>
-        <p>Bonne partie !</p>
+        <p>Amusez‑vous bien&nbsp;!</p>
     </footer>
-    <script src="scoreboard_yams.js"></script>
+    <script src="scoreboard_generic.js"></script>
 </body>
 </html>

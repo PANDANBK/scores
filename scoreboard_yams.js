@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const playerNamesContainer = document.getElementById('player-names-container');
     const scoreSection = document.getElementById('score-section');
     const scoreboardContainer = document.getElementById('scoreboard-container');
+    // Bouton de rejouer : nous utilisons un let pour pouvoir le réassigner après clonage
+    let replayButton = document.getElementById('replay-btn');
 
     function updatePlayerNameFields() {
         playerNamesContainer.innerHTML = '';
@@ -42,6 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('setup-section').classList.add('hidden');
         scoreSection.classList.remove('hidden');
         generateScoreboard(playerNames);
+        // Afficher le bouton de rejouer et configurer son évènement
+        replayButton.classList.remove('hidden');
+        // Cloner le bouton pour supprimer d'éventuels anciens gestionnaires d'événements
+        const newButton = replayButton.cloneNode(true);
+        replayButton.parentNode.replaceChild(newButton, replayButton);
+        replayButton = newButton;
+        // Lorsqu'on clique sur "Rejouer", demander confirmation avant de réinitialiser
+        replayButton.addEventListener('click', () => {
+            const confirmed = window.confirm('Confirmez‑vous vouloir rejouer ? Les scores seront effacés.');
+            if (confirmed) {
+                generateScoreboard(playerNames);
+            }
+        });
     });
 
     // Liste des catégories et type (upper: section supérieure / première partie, lower: section inférieure)
@@ -149,6 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreboardContainer.appendChild(table);
         // Calcul initial
         calculateTotals();
+        // Mettre à jour les coches de complétion après la génération du tableau
+        updateCompletionTicks();
+        // Mettre à jour les coches au niveau des cellules individuellement
+        updateCellTicks();
     }
 
     function calculateTotals() {
@@ -191,6 +210,58 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     span.textContent = value.toString();
                 });
+            }
+        });
+        // Mettre à jour les coches après recalcul des totaux
+        updateCompletionTicks();
+        // Mettre à jour les coches au niveau des cellules
+        updateCellTicks();
+    }
+
+    /**
+     * Parcourt chaque colonne de joueur et vérifie si toutes les cases de score
+     * sont renseignées (y compris 0). Si c'est le cas, ajoute la classe
+     * « completed » à l'en‑tête correspondant afin d'afficher une coche verte.
+     */
+    function updateCompletionTicks() {
+        const table = scoreboardContainer.querySelector('table');
+        if (!table) return;
+        const headers = table.querySelectorAll('thead th');
+        const playerCount = headers.length - 1;
+        const filled = new Array(playerCount).fill(true);
+        const inputs = table.querySelectorAll('input, select');
+        inputs.forEach((element) => {
+            const pIndex = parseInt(element.dataset.playerIndex, 10);
+            if (element.value === '' || element.value === undefined) {
+                filled[pIndex] = false;
+            }
+        });
+        for (let i = 0; i < playerCount; i++) {
+            const th = headers[i + 1];
+            if (filled[i]) {
+                th.classList.add('completed');
+            } else {
+                th.classList.remove('completed');
+            }
+        }
+    }
+
+    /**
+     * Met à jour les coches de chaque cellule de score. Si la valeur de
+     * l'entrée ou du menu déroulant est non vide, la classe « filled » est
+     * ajoutée à la cellule <td> afin d'afficher une coche verte via CSS.
+     */
+    function updateCellTicks() {
+        const table = scoreboardContainer.querySelector('table');
+        if (!table) return;
+        const cells = table.querySelectorAll('tbody td');
+        cells.forEach((td) => {
+            const input = td.querySelector('input, select');
+            if (!input) return;
+            if (input.value !== '' && input.value !== undefined) {
+                td.classList.add('filled');
+            } else {
+                td.classList.remove('filled');
             }
         });
     }

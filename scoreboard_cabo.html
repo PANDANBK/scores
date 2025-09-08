@@ -6,8 +6,8 @@
     <title>Compteur de scores – CABO</title>
     <link rel="stylesheet" href="styles.css">
 </head>
-<!-- Utilisons un dégradé inspiré de la charte graphique de Cabo pour l'arrière-plan. -->
-<body class="cabo-page" style="background: linear-gradient(180deg, #d8b3e5 0%, #c093d0 100%);">
+<!-- L'arrière-plan spécifique est supprimé pour un design plus sobre -->
+<body class="cabo-page">
     <header>
         <!-- Lien pour revenir à l'accueil -->
         <a href="index.html" class="home-link">Accueil</a>
@@ -35,6 +35,8 @@
             <div id="scoreboard-container">
                 <!-- Le tableau des scores sera généré ici -->
             </div>
+            <!-- Bouton pour rejouer la même partie avec les mêmes joueurs -->
+            <button id="replay-btn" class="hidden">Rejouer</button>
             <!-- Bouton pour ajouter une nouvelle manche -->
             <button id="add-round-btn">Ajouter une manche</button>
         </section>

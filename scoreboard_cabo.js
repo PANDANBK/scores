@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const scoreSection = document.getElementById('score-section');
     const scoreboardContainer = document.getElementById('scoreboard-container');
     const addRoundBtn = document.getElementById('add-round-btn');
+    // Bouton de rejouer : let pour pouvoir être réassigné après clonage
+    let replayButton = document.getElementById('replay-btn');
 
     // Tableau pour suivre si chaque joueur a utilisé sa seconde chance
     let usedSecondChance = [];
@@ -63,6 +65,20 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreSection.classList.remove('hidden');
         // Générer le tableau des scores
         generateScoreboard(playerNames);
+        // Afficher le bouton de rejouer et configurer son évènement
+        replayButton.classList.remove('hidden');
+        const newButton = replayButton.cloneNode(true);
+        replayButton.parentNode.replaceChild(newButton, replayButton);
+        replayButton = newButton;
+        replayButton.addEventListener('click', () => {
+            const confirmed = window.confirm('Confirmez‑vous vouloir rejouer ? Les scores seront effacés.');
+            if (confirmed) {
+                // Réinitialiser les variables de seconde chance
+                usedSecondChance = new Array(playerNames.length).fill(false);
+                secondChanceAdjustment = new Array(playerNames.length).fill(0);
+                generateScoreboard(playerNames);
+            }
+        });
     });
 
     // Génère la structure du tableau des scores
@@ -104,6 +120,10 @@ document.addEventListener('DOMContentLoaded', () => {
         scoreboardContainer.appendChild(table);
         // Ajouter automatiquement une première manche
         addRound();
+        // Mettre à jour l'indicateur de complétion
+        updateCompletionTicks();
+        // Mettre à jour les coches au niveau des cellules
+        updateCellTicks();
     }
 
     // Ajoute une ligne pour une nouvelle manche
@@ -135,6 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
         tbody.appendChild(tr);
         // Recalculer les totaux après avoir ajouté la manche
         calculateTotals();
+        // Mettre à jour l'indicateur de complétion
+        updateCompletionTicks();
+        // Mettre à jour les coches au niveau des cellules
+        updateCellTicks();
     }
 
     // Calcule les totaux pour chaque joueur ainsi que les totaux de manche
@@ -185,6 +209,59 @@ document.addEventListener('DOMContentLoaded', () => {
                 cell.classList.add('exceeded');
             } else {
                 cell.classList.remove('exceeded');
+            }
+        });
+        // Mettre à jour l'indicateur de complétion après recalcul des totaux
+        updateCompletionTicks();
+        // Mettre à jour les coches au niveau des cellules
+        updateCellTicks();
+    }
+
+    /**
+     * Parcourt chaque joueur et vérifie si toutes les entrées de toutes les
+     * manches sont remplies (même avec 0). Si c'est le cas, ajoute la classe
+     * « completed » à l'en‑tête du joueur afin d'afficher une coche verte.
+     */
+    function updateCompletionTicks() {
+        const table = scoreboardContainer.querySelector('table');
+        if (!table) return;
+        const headers = table.querySelectorAll('thead th');
+        const playerCount = headers.length - 1;
+        const filled = new Array(playerCount).fill(true);
+        // Pour chaque entrée, si la valeur est vide, marquer le joueur comme incomplet
+        const inputs = table.querySelectorAll('tbody input');
+        inputs.forEach((input) => {
+            const pIndex = parseInt(input.dataset.playerIndex, 10);
+            if (input.value === '' || input.value === undefined) {
+                filled[pIndex] = false;
+            }
+        });
+        for (let i = 0; i < playerCount; i++) {
+            const th = headers[i + 1];
+            if (filled[i]) {
+                th.classList.add('completed');
+            } else {
+                th.classList.remove('completed');
+            }
+        }
+    }
+
+    /**
+     * Met à jour les coches de chaque cellule de score. Si la valeur de l'entrée
+     * est non vide, la classe « filled » est ajoutée à la cellule <td> afin
+     * d'afficher une coche verte via CSS.
+     */
+    function updateCellTicks() {
+        const table = scoreboardContainer.querySelector('table');
+        if (!table) return;
+        const cells = table.querySelectorAll('tbody td');
+        cells.forEach((td) => {
+            const input = td.querySelector('input');
+            if (!input) return;
+            if (input.value !== '' && input.value !== undefined) {
+                td.classList.add('filled');
+            } else {
+                td.classList.remove('filled');
             }
         });
     }

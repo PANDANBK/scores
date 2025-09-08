@@ -184,11 +184,13 @@ form button:focus {
 
 .scoreboard-table th,
 .scoreboard-table td {
-    padding: 0.6rem;
+    padding: 0.75rem 0.5rem;
     text-align: center;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.scoreboard-table th {
+/* En-tête de tableau (ligne des joueurs) */
+.scoreboard-table thead th {
     background-color: var(--primary-color);
     color: #fff;
     font-weight: 600;
@@ -196,8 +198,33 @@ form button:focus {
     letter-spacing: 0.5px;
 }
 
+/* Libellés des catégories dans le corps du tableau */
+.scoreboard-table tbody th {
+    background-color: #eef2ff; /* teinte douce pour différencier des en-têtes */
+    color: var(--text-color);
+    font-weight: 500;
+    text-transform: none;
+}
+
 .scoreboard-table tbody tr:nth-child(even) {
     background-color: var(--table-row-alt);
+}
+
+/* Surbrillance au survol des lignes pour une meilleure lisibilité */
+.scoreboard-table tbody tr:hover {
+    background-color: rgba(84, 104, 255, 0.05);
+}
+
+/* Accentuation de la dernière ligne du tableau (totaux) */
+.scoreboard-table tbody tr:last-child {
+    background-color: rgba(84, 104, 255, 0.1);
+    font-weight: 600;
+}
+
+/* Retirer la ligne de séparation sous la dernière ligne */
+.scoreboard-table tbody tr:last-child td,
+.scoreboard-table tbody tr:last-child th {
+    border-bottom: none;
 }
 
 .scoreboard-table input[type="number"],
@@ -269,6 +296,86 @@ footer {
     font-size: 0.9rem;
 }
 
+/*
+ * Indicateur de complétion : lorsque toutes les cases d'un joueur sont renseignées,
+ * un symbole de check vert apparaît à côté de son nom dans l'en‑tête du tableau.
+ */
+.scoreboard-table thead th.completed::after {
+    content: '\2714';
+    margin-left: 0.4rem;
+    color: #27ae60;
+    font-size: 1.2rem;
+}
+
+/* Bouton pour rejouer avec les mêmes joueurs. Ce bouton est caché par défaut
+   et apparaît une fois la feuille de score générée. Il adopte le même style
+   que le bouton d'ajout de manche. */
+#replay-btn {
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.6rem 1.5rem;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#replay-btn:hover,
+#replay-btn:focus {
+    background-color: #e05b66;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/*
+ * Afficher une coche verte à l'intérieur d'une cellule lorsque celle-ci est remplie.
+ * La classe .filled est ajoutée dynamiquement via JavaScript sur les <td> qui
+ * contiennent une entrée ou un menu déroulant dont la valeur n'est pas vide.
+ */
+.scoreboard-table td.filled {
+    position: relative;
+}
+
+.scoreboard-table td.filled::after {
+    content: '\2714';
+    color: #27ae60;
+    position: absolute;
+    top: 50%;
+    right: 4px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+/* Spécial Cartographers : Heroes – coloration et symbole pour les lignes de monstres */
+.scoreboard-table tr.monster-row th,
+.scoreboard-table tr.monster-row td {
+    background-color: #fff5f5; /* teinte rosée pour distinguer les monstres */
+}
+
+.scoreboard-table td.monster-cell {
+    position: relative;
+}
+
+.scoreboard-table td.monster-cell::before {
+    content: '-';
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #c0392b; /* rouge doux pour le signe négatif */
+    font-size: 1rem;
+    pointer-events: none;
+}
+
+/* Ajouter un peu de marge à l'entrée pour laisser de la place au signe moins */
+.scoreboard-table td.monster-cell input {
+    padding-left: 1rem;
+}
+
 /* Classe pour signaler qu'un joueur a dépassé 100 points dans CABO */
 .exceeded {
     background-color: #ffe6e6;
@@ -290,15 +397,6 @@ footer {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-/* Amélioration de la lisibilité sur la page Cabo : appliquer un fond clair et un conteneur centré pour les sections */
-.cabo-page main section {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 8px;
-    padding: 1rem;
-    max-width: 800px;
-    margin: 1rem auto;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
 /* Ajuster l'alignement du titre lorsqu'un lien d'accueil est présent */
 header h1 {
     margin-left: 2rem;
