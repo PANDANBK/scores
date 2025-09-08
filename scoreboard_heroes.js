@@ -82,35 +82,38 @@ document.addEventListener('DOMContentLoaded', () => {
         table.appendChild(thead);
         // Corps : une série de lignes pour chaque saison
         const tbody = document.createElement('tbody');
+        // Chaque saison a désormais deux lignes d'objectifs distincts au lieu d'une ligne combinée
         const seasons = [
-            { name: 'Printemps', objectives: 'A+B' },
-            { name: 'Été',       objectives: 'B+C' },
-            { name: 'Automne',   objectives: 'C+D' },
-            { name: 'Hiver',     objectives: 'D+A' }
+            { name: 'Printemps', objectives: ['A', 'B'] },
+            { name: 'Été',       objectives: ['B', 'C'] },
+            { name: 'Automne',   objectives: ['C', 'D'] },
+            { name: 'Hiver',     objectives: ['D', 'A'] }
         ];
-        // Créer trois lignes par saison : Objectifs, Pièces et Monstres
+        // Créer pour chaque saison : deux lignes d'objectifs (une par lettre), une ligne de pièces et une ligne de monstres
         let rowCounter = 0;
         seasons.forEach((season) => {
-            // Ligne des objectifs pour la saison
-            const objRow = document.createElement('tr');
-            const objLabel = document.createElement('th');
-            objLabel.textContent = `${season.name} – Objectifs (${season.objectives})`;
-            objRow.appendChild(objLabel);
-            players.forEach((player, pIndex) => {
-                const td = document.createElement('td');
-                const input = document.createElement('input');
-                input.type = 'number';
-                input.min = '0';
-                input.value = '';
-                input.dataset.playerIndex = pIndex;
-                input.dataset.rowIndex = rowCounter;
-                input.dataset.role = 'objectives';
-                input.addEventListener('input', calculateTotals);
-                td.appendChild(input);
-                objRow.appendChild(td);
+            // Lignes des objectifs pour la saison (une par lettre)
+            season.objectives.forEach((letter) => {
+                const objRow = document.createElement('tr');
+                const objLabel = document.createElement('th');
+                objLabel.textContent = `${season.name} – Objectif ${letter}`;
+                objRow.appendChild(objLabel);
+                players.forEach((player, pIndex) => {
+                    const td = document.createElement('td');
+                    const input = document.createElement('input');
+                    input.type = 'number';
+                    input.min = '0';
+                    input.value = '';
+                    input.dataset.playerIndex = pIndex;
+                    input.dataset.rowIndex = rowCounter;
+                    input.dataset.role = 'objectives';
+                    input.addEventListener('input', calculateTotals);
+                    td.appendChild(input);
+                    objRow.appendChild(td);
+                });
+                tbody.appendChild(objRow);
+                rowCounter++;
             });
-            tbody.appendChild(objRow);
-            rowCounter++;
             // Ligne des pièces pour la saison
             const coinRow = document.createElement('tr');
             const coinLabel = document.createElement('th');
@@ -133,14 +136,12 @@ document.addEventListener('DOMContentLoaded', () => {
             rowCounter++;
             // Ligne des monstres pour la saison
             const monsterRow = document.createElement('tr');
-            // Ajouter une classe spécifique pour styliser la ligne des monstres
             monsterRow.classList.add('monster-row');
             const monsterLabel = document.createElement('th');
             monsterLabel.textContent = `${season.name} – Monstres`;
             monsterRow.appendChild(monsterLabel);
             players.forEach((player, pIndex) => {
                 const td = document.createElement('td');
-                // Marquer cette cellule comme une cellule de monstre pour le style
                 td.classList.add('monster-cell');
                 const input = document.createElement('input');
                 input.type = 'number';
