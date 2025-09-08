@@ -182,8 +182,12 @@ footer {
 
 /* Mise en forme de l'illustration d'inspiration pour le jeu Cabo */
 .cabo-inspiration img {
+    /* Limiter la largeur à 100 % du conteneur et la hauteur à 300 px pour ne pas écraser la mise en page */
     width: 100%;
     max-width: 800px;
+    max-height: 250px;
+    height: auto;
+    object-fit: contain;
     display: block;
     margin: 0 auto 1rem;
     border-radius: 8px;
